@@ -4,22 +4,19 @@ var router = express.Router();
 var burger = require('../models/burger.js');
 
 // Create routes
-// ----------------------------------------------------
 // Index Redirect
 router.get('/', function (req, res) {
   res.redirect('/index');
 });
 
 
-// Index Page (render all burgers to DOM)
+// Index Page
 router.get('/index', function (req, res) {
   burger.selectAll(function(data) {
     var hbsObject = { burgers: data };
-    //console.log(hbsObject);
     res.render('index', hbsObject);
   });
 });
-
 
 // Create a New Burger
 router.post('/burger/create', function (req, res) {
@@ -28,15 +25,11 @@ router.post('/burger/create', function (req, res) {
   });
 });
 
-
 // Devour a Burger
 router.post('/burger/eat/:id', function (req, res) {
   burger.updateOne(req.params.id, function() {
     res.redirect('/index');
   });
 });
-// ----------------------------------------------------
-
-
 // Export routes
 module.exports = router;
